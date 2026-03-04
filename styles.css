@@ -1,4 +1,7 @@
 body {
+  display: flex;
+  justify-content: center;
+  align-items:     center;
   perspective: 800px;
   background-image: linear-gradient(
     skyblue,
@@ -6,7 +9,9 @@ body {
   );
 
   > div {
-    width:  100%;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
     aspect-ratio: 1 / 1;
   }
 
@@ -16,7 +21,7 @@ body {
     /* ferret */
     &:nth-of-type(2) {
       width:  30%;
-      aspect-ratio: 1 / 1;
+      height: 30%;
       right:  50%;
       bottom: 50%;
       transform: translate(50%, 0);
@@ -27,7 +32,7 @@ body {
     /* floor */
     &:nth-of-type(1) {
       width:  70%;
-      aspect-ratio: 1 / 1;
+      height: 70%;
       right:  50%;
       bottom: 50%;
       transform:
