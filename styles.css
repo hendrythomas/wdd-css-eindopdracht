@@ -1,0 +1,51 @@
+body {
+  perspective: 800px;
+
+  div {
+    position: absolute;
+
+    &:nth-of-type(1) {
+      width:  200px;
+      height: 200px;
+      background-color: red;
+    }
+    /* floor */
+    &:nth-of-type(2) {
+      width:  70%;
+      aspect-ratio: 1 / 1;
+      right:  50%;
+      bottom: 50%;
+      transform:
+        translate(50%, 50%)
+        rotate3d(1, 0, 0, 65deg)
+        rotate3d(0, 1, 0, 0deg)
+        rotate3d(0, 0, 1, -45deg)
+        perspective(400px);
+      background: linear-gradient(
+        green,
+        yellowgreen,
+        green,
+        yellowgreen,
+        green
+      );
+      background-size: 100% 200%;
+      animation: test 1s linear infinite;
+    }
+  }
+}
+
+@keyframes test {
+    0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0;
+}
