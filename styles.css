@@ -1,16 +1,31 @@
 body {
   perspective: 800px;
+  background-image: linear-gradient(
+    skyblue,
+    aliceblue
+  );
 
-  div {
+  > div {
+    width:  100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  > div > div {
     position: absolute;
 
-    &:nth-of-type(1) {
-      width:  200px;
-      height: 200px;
-      background-color: red;
-    }
-    /* floor */
+    /* ferret */
     &:nth-of-type(2) {
+      width:  30%;
+      aspect-ratio: 1 / 1;
+      right:  50%;
+      bottom: 50%;
+      transform: translate(50%, 0);
+      background-color: blue;
+      border-radius: 100%;
+    }
+
+    /* floor */
+    &:nth-of-type(1) {
       width:  70%;
       aspect-ratio: 1 / 1;
       right:  50%;
@@ -21,7 +36,7 @@ body {
         rotate3d(0, 1, 0, 0deg)
         rotate3d(0, 0, 1, -45deg)
         perspective(400px);
-      background: linear-gradient(
+      background-image: linear-gradient(
         green,
         yellowgreen,
         green,
@@ -29,7 +44,7 @@ body {
         green
       );
       background-size: 100% 200%;
-      animation: test 1s linear infinite;
+      animation: test 0.7s infinite linear;
     }
   }
 }
