@@ -102,8 +102,11 @@ body > input {
   50% {
     --current-item: 3;
   }
-  100% {
+  75% {
     --current-item: 4;
+  }
+  100% {
+    --current-item: 0;
     margin-left: 100%;
   }
 }
