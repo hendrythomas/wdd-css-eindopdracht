@@ -24,7 +24,7 @@ body > div:nth-of-type(1) {
   position: fixed;
   width:  50px;
   height: 50px;
-  background-color: mediumslateblue;
+  background-color: greenyellow;
   animation: crane-move 10s linear infinite alternate;
 }
 html:has(body > input:nth-of-type(1):checked) {
