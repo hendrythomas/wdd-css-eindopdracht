@@ -14,7 +14,14 @@ button, a {
 }
 
 
+:root {
+  --dur-crane-move:    10s;
+  --dur-crane-collect:  5s;
+  --dur-crane-return:   5s;
+}
+
 body > div:nth-of-type(1) {
+  position: fixed;
   width:  50px;
   height: 50px;
   background-color: mediumslateblue;
@@ -23,25 +30,42 @@ body > div:nth-of-type(1) {
 html:has(body > input:nth-of-type(1):checked) {
   div:nth-of-type(1) {
     animation:
-      crane-move    10s linear infinite alternate,
-      crane-collect  5s linear,
-      crane-return   1s ease-in,
-      crane-collect  5s linear;
+      crane-move    var(--dur-crane-move) linear infinite alternate,
+      crane-collect var(--dur-crane-collect) linear,
+      crane-return  var(--dur-crane-return) ease-in;
     animation-delay:
       0s,
-      1s,
-      6s,
-      7s;
+      0s,
+      var(--dur-crane-collect);
     animation-fill-mode:
       none,
       none,
-      forwards,
-      none;
+      forwards;
     animation-play-state:
       paused,
       running,
-      running,
       running;
+  }
+}
+
+body > div:nth-of-type(2) {
+  --sheet-cols: 5;
+  --sheet-rows: 1;
+  --current-item: 0;
+  position: fixed;
+  width:  50px;
+  height: 50px;
+  margin-top: 50%;
+  background-image: url('assets/sheet-test.png');
+  background-size: calc(var(--sheet-cols) * 100%) calc(var(--sheet-rows) * 100%);
+  background-position: calc(var(--current-item) * -100%) calc(0 * -100%);
+  opacity: 0.3;
+  animation: crane-move 10s steps(5) infinite alternate;
+}
+html:has(body > input:nth-of-type(1):checked) {
+  div:nth-of-type(2) {
+    opacity: 1;
+    animation-play-state: paused;
   }
 }
 
@@ -53,7 +77,17 @@ body > input {
 /* animations */
 
 @keyframes crane-move {
+  0% {
+    --current-item: 1;
+  }
+  25% {
+    --current-item: 2;
+  }
+  50% {
+    --current-item: 3;
+  }
   100% {
+    --current-item: 4;
     margin-left: 100%;
   }
 }
