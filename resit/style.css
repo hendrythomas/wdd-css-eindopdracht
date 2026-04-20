@@ -65,7 +65,23 @@ body > div:nth-of-type(2) {
 html:has(body > input:nth-of-type(1):checked) {
   div:nth-of-type(2) {
     opacity: 1;
-    animation-play-state: paused;
+    
+    animation:
+      crane-move    var(--dur-crane-move) linear infinite alternate,
+      item-collect var(--dur-crane-collect) linear,
+      crane-return  var(--dur-crane-return) ease-in;
+    animation-delay:
+      0s,
+      0s,
+      var(--dur-crane-collect);
+    animation-fill-mode:
+      none,
+      forwards,
+      forwards;
+    animation-play-state:
+      paused,
+      running,
+      running;
   }
 }
 
@@ -94,6 +110,14 @@ body > input {
 @keyframes crane-collect {
   50% {
     margin-top: 50%;
+  }
+}
+@keyframes item-collect {
+  50% {
+    margin-top: 50%;
+  }
+  100% {
+    margin-top: 0%;
   }
 }
 @keyframes crane-return {
