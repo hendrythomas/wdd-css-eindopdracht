@@ -29,8 +29,9 @@ html, body {
   --claw-width:  50px;
   --claw-height: 50px;
   --dur-claw-move:    5s;
-  --dur-claw-drop: 5s;
+  --dur-claw-collect: 5s;
   --dur-claw-return:  5s;
+  --dur-item-drop:    1.5s;
 }
 
 html {
@@ -73,14 +74,14 @@ body > div:nth-of-type(1) {
         background-color: #90ee9080;
         animation:
           claw-move var(--dur-claw-move) infinite linear alternate,
-          claw-drop var(--dur-claw-drop) linear,
-          claw-drop var(--dur-claw-drop) linear reverse,
+          claw-collect var(--dur-claw-collect) linear,
+          claw-collect var(--dur-claw-collect) linear reverse,
           claw-return var(--dur-claw-return) ease-in;
         animation-delay:
           0s,
           0s,
-          var(--dur-claw-drop),
-          calc(var(--dur-claw-drop) + var(--dur-claw-drop));
+          var(--dur-claw-collect),
+          calc(var(--dur-claw-collect) + var(--dur-claw-collect));
         animation-fill-mode:
           none,
           none,
@@ -107,22 +108,27 @@ body > div:nth-of-type(1) {
         background-size:
           calc(var(--sheet-cols) * 100%)
           calc(var(--sheet-rows) * 100%);
-          animation:
-            claw-move var(--dur-claw-move) infinite linear alternate,
-            claw-drop var(--dur-claw-drop) linear reverse,
-            claw-return var(--dur-claw-return) ease-in;
-          animation-delay:
-            0s,
-            var(--dur-claw-drop),
-            calc(var(--dur-claw-drop) + var(--dur-claw-drop));
-          animation-fill-mode:
-            none,
-            forwards,
-            forwards;
-          animation-play-state:
-            running,
-            paused,
-            paused;
+        opacity: 0.5;
+        animation:
+          claw-move var(--dur-claw-move) infinite linear alternate,
+          claw-collect var(--dur-claw-collect) linear reverse,
+          claw-return var(--dur-claw-return) ease-in,
+          claw-collect var(--dur-item-drop) ease-in;
+        animation-delay:
+          0s,
+          var(--dur-claw-collect),
+          calc(var(--dur-claw-collect) + var(--dur-claw-collect)),
+          calc(var(--dur-claw-collect) + var(--dur-claw-collect) + var(--dur-claw-collect));
+        animation-fill-mode:
+          none,
+          forwards,
+          forwards,
+          forwards;
+        animation-play-state:
+          running,
+          paused,
+          paused,
+          paused;
       }
     }
   }
@@ -143,8 +149,10 @@ html:has(
     }
     /* item */
     &:nth-of-type(2) {
+      opacity: 1;
       animation-play-state:
         paused,
+        running,
         running,
         running;
     }
@@ -183,7 +191,7 @@ body > div:nth-of-type(2) {
   }
 }
 
-@keyframes claw-drop {
+@keyframes claw-collect {
   0% {
     margin-top: 0;
   }
