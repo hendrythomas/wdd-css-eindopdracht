@@ -28,29 +28,28 @@ html, body {
 :root {
   --claw-width:  50px;
   --claw-height: 50px;
-  --dur-claw-move:    5s;
-  --dur-claw-collect: 5s;
-  --dur-claw-return:  5s;
-  --dur-item-drop:    1.5s;
+  --dur-claw-move:    4s;
+  --dur-claw-collect: 3s;
+  --dur-claw-return:  3s;
+  --dur-item-drop:    1s;
 }
 
 html {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: black;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  right:  50%;
+  bottom: 50%;
+  translate: 50% 50%;
   max-width: 400px;
   overflow: hidden;
 }
 
 body > div:nth-of-type(1),
 body > div:nth-of-type(2) {
-  flex: 1;
+  height: 50%;
 }
 
 /* box */
@@ -73,9 +72,9 @@ body > div:nth-of-type(1) {
         height: 50px;
         background-color: #90ee9080;
         animation:
-          claw-move var(--dur-claw-move) infinite linear alternate,
+          claw-move-x var(--dur-claw-move) infinite linear alternate,
           claw-collect var(--dur-claw-collect) linear,
-          claw-collect var(--dur-claw-collect) linear reverse,
+          claw-collect var(--dur-claw-collect) ease-out reverse,
           claw-return var(--dur-claw-return) ease-in;
         animation-delay:
           0s,
@@ -98,6 +97,8 @@ body > div:nth-of-type(1) {
       > div:nth-of-type(2) {
         --sheet-cols: 5;
         --sheet-rows: 1;
+        --claw-x: 0;
+        --claw-z: 0;
         position: absolute;
         top:  0;
         left: 0;
@@ -108,34 +109,54 @@ body > div:nth-of-type(1) {
         background-size:
           calc(var(--sheet-cols) * 100%)
           calc(var(--sheet-rows) * 100%);
-        opacity: 0.5;
+        background-position:
+          calc(var(--claw-x) * -100%)
+          calc(var(--claw-z) * -100%);
+        opacity: 0;
         animation:
-          claw-move var(--dur-claw-move) infinite linear alternate,
-          claw-collect var(--dur-claw-collect) linear reverse,
+          claw-move-x var(--dur-claw-move) infinite linear alternate,
+          item-cycle-x var(--dur-claw-move) infinite linear alternate,
+          claw-collect var(--dur-claw-collect) ease-out reverse,
           claw-return var(--dur-claw-return) ease-in,
           claw-collect var(--dur-item-drop) ease-in;
         animation-delay:
+          0s,
           0s,
           var(--dur-claw-collect),
           calc(var(--dur-claw-collect) + var(--dur-claw-collect)),
           calc(var(--dur-claw-collect) + var(--dur-claw-collect) + var(--dur-claw-collect));
         animation-fill-mode:
           none,
+          none,
           forwards,
           forwards,
           forwards;
         animation-play-state:
           running,
+          running,
           paused,
           paused,
           paused;
+      }
+
+      /* display items */
+      > div:nth-of-type(3) {
+        position: absolute;
+        top:  0;
+        left: 0;
+        margin-top: calc(100% - 50px);
+        width:  100%;
+        height: 50px;
+        background-image: url('assets/sheet-test.png');
+        background-size: 100%;
       }
     }
   }
 }
 
-/* stop x checked */
+/* do x collect animation if stop x checked */
 html:has(
+  /* stop x checked */
   body > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > input:nth-of-type(1):checked
 ) {
   body > div:nth-of-type(1) > div:nth-of-type(1) > div {
@@ -152,9 +173,24 @@ html:has(
       opacity: 1;
       animation-play-state:
         paused,
+        paused,
         running,
         running,
         running;
+    }
+  }
+}
+
+/* reset claw animation on stop x uncheck */
+html:has(
+  /* stop x checked active */
+  body > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > input:nth-of-type(1):checked:active
+) {
+  body > div:nth-of-type(1) > div:nth-of-type(1) > div {
+    /* claw */
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
+      animation: none;
     }
   }
 }
@@ -167,14 +203,6 @@ body > div:nth-of-type(2) {
     background-color: royalblue;
     
     &:nth-of-type(1) {
-      > span {
-        color: red;
-      }
-      > div:nth-of-type(1) {
-        > input:nth-of-type(1) {
-          outline: 4px solid red;
-        }
-      }
     }
   }
 }
@@ -182,7 +210,7 @@ body > div:nth-of-type(2) {
 
 /* animations */
 
-@keyframes claw-move {
+@keyframes claw-move-x {
   0% {
     margin-left: 0;
   }
@@ -204,4 +232,12 @@ body > div:nth-of-type(2) {
   100% {
     margin-left: 0;
   }
+}
+
+@keyframes item-cycle-x {
+    0% { --claw-x: 0; }
+   25% { --claw-x: 1; }
+   50% { --claw-x: 2; }
+   75% { --claw-x: 3; }
+  100% { --claw-x: 4; }
 }
