@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0;
+}
+
+/* button, a {
+  all: unset;
+  box-sizing: border-box;
+} */
+
+
+:nth-child(1) { --i: 1; }
+:nth-child(2) { --i: 2; }
+:nth-child(3) { --i: 3; }
+:nth-child(4) { --i: 4; }
+:nth-child(5) { --i: 5; }
+:nth-child(6) { --i: 6; }
+:nth-child(7) { --i: 7; }
+:nth-child(8) { --i: 8; }
+:nth-child(9) { --i: 9; }
+
+
+:root {
+  --body-width: clamp(20vw, 300px, 70vw);
+  
+  --claw-width:  50px;
+  --claw-height: 50px;
+
+  --sheet-cols: 5;
+  --sheet-rows: 1;
+
+  --dur-claw-move:      4s;
+  --dur-claw-collect-a: 3s;
+  --dur-claw-collect-b: 3s;
+  --dur-claw-return:    3s;
+  --dur-item-drop:      1s;
+  
+
+  /* --dur-claw-move:      2s;
+  --dur-claw-collect-a: 1.5s;
+  --dur-claw-collect-b: 1.5s;
+  --dur-claw-return:    1.5s;
+  --dur-item-drop:      0.5s; */
+}
+
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  background-color: black;
+}
+
+body {
+  position: relative;
+  width: var(--body-width);
+  margin: auto;
+
+  > div {
+    > div {
+      position: absolute;
+      right:  50%;
+      bottom: 50%;
+      translate: 50% 50%;
+      width:  var(--body-width);
+      height: var(--body-width);
+      transform:
+        rotatex(65deg)
+        rotatez(65deg);
+      transform-style: preserve-3d;
+      background-color: #666;
+
+      > div {
+        position: absolute;
+        width:  100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transform:
+          rotatex(90deg)
+          rotatey(var(--rotatey))
+          translate3d(
+            0,
+            calc(var(--body-width) * -0.5),
+            calc(var(--body-width) * 0.5)
+          );
+
+        &:nth-child(1) { --rotatey: 0; }
+        &:nth-child(2) { --rotatey: 90deg; }
+        &:nth-child(3) { --rotatey: 180deg; }
+        &:nth-child(4) { --rotatey: -90deg; }
+      }
+    
+      /* box */
+      &:nth-child(2) {
+        transform:
+          rotatex(65deg)
+          rotatez(65deg)
+          translate3d(
+            0,
+            0,
+            var(--body-width)
+          );
+  
+        > div {
+          box-shadow: 0 0 8px 2px #ffffff90 inset;
+          background-color: #ffffff10;
+        }
+      }
+  
+      /* stand */
+      &:nth-child(1) {
+        > div {
+          background-color: royalblue;
+        }
+      }
+    }
+  }
+}
