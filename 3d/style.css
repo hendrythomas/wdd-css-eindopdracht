@@ -26,6 +26,8 @@ html, body {
 
 
 :root {
+  --angle: 5;
+  --rotate-x: calc(var(--angle) * 18 * 1deg);
   --body-width: clamp(20vw, 300px, 70vw);
   
   --claw-width:  50px;
@@ -54,16 +56,20 @@ html, body {
   margin: 0;
 }
 
-html {
-  background-color: black;
-}
-
 body {
   position: relative;
-  width: var(--body-width);
   margin: auto;
+  color: white;
+  background-color: black;
 
   > div {
+    position: absolute;
+    right:  50%;
+    bottom: 50%;
+    translate: 50% 50%;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+
     > div {
       position: absolute;
       right:  50%;
@@ -72,8 +78,8 @@ body {
       width:  var(--body-width);
       height: var(--body-width);
       transform:
-        rotatex(65deg)
-        rotatez(65deg);
+        rotatex(80deg)
+        rotatez(var(--rotate-x));
       transform-style: preserve-3d;
       background-color: #666;
 
@@ -83,25 +89,20 @@ body {
         height: 100%;
         transform-style: preserve-3d;
         transform:
-          rotatex(90deg)
-          rotatey(var(--rotatey))
+          rotatex(-90deg)
+          rotatey(calc(90deg * var(--i)))
           translate3d(
             0,
-            calc(var(--body-width) * -0.5),
+            calc(var(--body-width) * 0.5),
             calc(var(--body-width) * 0.5)
           );
-
-        &:nth-child(1) { --rotatey: 0; }
-        &:nth-child(2) { --rotatey: 90deg; }
-        &:nth-child(3) { --rotatey: 180deg; }
-        &:nth-child(4) { --rotatey: -90deg; }
       }
     
       /* box */
       &:nth-child(2) {
         transform:
-          rotatex(65deg)
-          rotatez(65deg)
+          rotatex(80deg)
+          rotatez(var(--rotate-x))
           translate3d(
             0,
             0,
