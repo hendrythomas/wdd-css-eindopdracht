@@ -29,6 +29,11 @@ html, body {
   inherits: true;
   initial-value: 0px;
 }
+@property --size {
+  syntax: '<length> | <percentage>';
+  inherits: true;
+  initial-value: 0px;
+}
 @property --x {
   syntax: '<length> | <percentage>';
   inherits: false;
@@ -196,17 +201,43 @@ body {
 /* animations */
 
 @keyframes claw-move-x {
-    0% { --x: 0; }
-              /* TODO: use body width */
-  100% { --x: clamp(20vw, 300px, 70vw); }
-}
-
-@keyframes claw-move-z {
-    0% { --z: 0; }
-  100% { --z: calc(clamp(20vw, 300px, 70vw) * -1); }
+  0% {
+    --x: 0;
+  }
+  100% {
+    --x:
+      /* TODO: use --body-width and --size */
+      calc(
+        clamp(20vw, 300px, 70vw) -
+        calc(clamp(20vw, 300px, 70vw) / 3)
+      );
+  }
 }
 
 @keyframes claw-move-y {
-    0% { --y: 0; }
-  100% { --y: clamp(20vw, 300px, 70vw); }
+  0% {
+    --y: 0;
+  }
+  100% {
+    --y:
+      calc(
+        clamp(20vw, 300px, 70vw) -
+        calc(clamp(20vw, 300px, 70vw) / 3)
+      );
+  }
+}
+
+@keyframes claw-move-z {
+  0% {
+    /* TODO: use --size */
+    --z: calc(clamp(20vw, 300px, 70vw) / 3 / 2 * -1);
+  }
+  100% {
+    --z:
+      calc(
+        (clamp(20vw, 300px, 70vw) -
+        (clamp(20vw, 300px, 70vw) / 3 / 2)) *
+        -1
+      );
+  }
 }
