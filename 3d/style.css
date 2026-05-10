@@ -62,7 +62,7 @@ html, body {
   --display-cols: 5;
   --display-rows: 5;
   --sheet-cols: 5;
-  --sheet-rows: 1;
+  --sheet-rows: 2;
 
   --dur-claw-move:      4s;
   --dur-claw-collect-a: 1.5s;
@@ -158,6 +158,7 @@ body {
             transform:
               translate3d(var(--x), var(--y), var(--z));
             transform-style: preserve-3d;
+
             animation:
               claw-move-x var(--dur-claw-move) linear forwards,
               claw-move-z var(--dur-claw-move) linear forwards,
@@ -191,7 +192,7 @@ body {
             }
           }
           
-          > div:nth-of-type(3) /* display item columns */ {
+          > div:nth-of-type(3) /* display items */ {
             display: flex;
             position: absolute;
             top:  0;
@@ -202,22 +203,23 @@ body {
             transform-origin: bottom center;
             transform-style: preserve-3d;
 
-            /* display item rows */
-            > div {
+            > div /* columns */ {
+              --col: var(--i);
               display: flex;
               flex-direction: column-reverse;
               width:  100%;
               height: 100%;
               transform-style: preserve-3d;
-              animation: col-5-select var(--dur-claw-move) steps(1);
+
+              animation: col-5-select var(--dur-claw-move) step-end;
               animation-delay:
                 calc(
-                  (var(--i) - 1) *
+                  (var(--col) - 1) *
                   var(--dur-claw-move) / (var(--display-cols) - 1)
                 );
               animation-play-state: paused;
               
-              > div {
+              > div /* item */ {
                 --size: calc(var(--body-width) / var(--display-cols));
                 display: flex;
                 width:  var(--size);
@@ -226,14 +228,23 @@ body {
                   translateZ(calc(var(--size) / 2))
                   rotateX(-90deg);
                 transform-style: preserve-3d;
-                animation: col-5-select var(--dur-claw-move) steps(1);
+
+                background-image: url('/assets/sheet-test.png');
+                background-size:
+                  calc(var(--sheet-cols) * 100%)
+                  calc(var(--sheet-rows) * 100%);
+                background-position:
+                  calc((var(--col) - 1) * -100%)
+                  calc((var(--i) - 1) * -100%);
+                image-rendering: pixelated;
+
+                animation: col-5-select var(--dur-claw-move) step-end;
                 animation-delay:
                   calc(
                     (var(--i) - 1) *
                     var(--dur-claw-move) / (var(--display-cols) - 1)
                   );
                 animation-play-state: paused;
-                background-image: url('/assets/sheet-test.png');
               }
             }
           }
@@ -386,7 +397,7 @@ html:has(
 }
 
 @keyframes col-5-select {
-    0% { background-color: red; }
+    0% { background-color: #ffffff80; }
    25%,
   100% { background-color: transparent; }
 }
