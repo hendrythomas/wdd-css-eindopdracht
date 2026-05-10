@@ -145,6 +145,7 @@ body {
 
           > div:nth-of-type(1) /* claw */ {
             --size: calc(var(--body-width) / 3);
+            --z: calc(var(--size) / -2); /* adjust for depth */
             position: absolute;
             top:  0;
             left: 0;
@@ -152,21 +153,19 @@ body {
             height: var(--size);
             background-image: url('/assets/claw.png');
             background-size: 100%;
-            /* transform:
-              translateZ(calc(var(--body-width) * -0.5)); */
             transform:
-              translate3d(
-                var(--x),
-                var(--y),
-                var(--z)
-              );
+              translate3d(var(--x), var(--y), var(--z));
             transform-style: preserve-3d;
             animation:
               claw-move-x var(--dur-claw-move) linear forwards,
-              claw-move-y var(--dur-item-drop) linear forwards,
-              claw-move-z var(--dur-claw-move) linear forwards;
+              claw-move-z var(--dur-claw-move) linear forwards,
+              claw-move-y var(--dur-item-drop) linear forwards;
+            animation-delay:
+              1s,
+              1s,
+              0s;
             animation-play-state:
-              running,
+              paused,
               paused,
               paused;
             
@@ -200,10 +199,41 @@ body {
   }
 }
 
+/* move claw x */
 html:has(
+  /* coin checked */
+  body > div > div:nth-of-type(1) > div > input:nth-of-type(1):checked
+) {
+  /* claw */
+  body > div > div:nth-of-type(2) > div > div:nth-of-type(1) /* claw */ {
+    animation-play-state:
+      running,
+      paused,
+      paused;
+  }
+}
+
+/* move claw z */
+html:has(
+  /* x button checked */
   body > div > div:nth-of-type(1) > div > div > input:nth-of-type(1):checked
 ) {
+  /* claw */
   body > div > div:nth-of-type(2) > div > div:nth-of-type(1) /* claw */ {
+    animation-play-state:
+      paused,
+      running,
+      paused;
+  }
+}
+
+/* drop claw */
+html:has(
+  /* z button checked */
+  body > div > div:nth-of-type(1) > div > div > input:nth-of-type(2):checked
+) {
+  /* claw */
+  body > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
     animation-play-state:
       paused,
       paused,
@@ -211,14 +241,15 @@ html:has(
   }
 }
 
+/* reset claw position */
 html:has(
-  body > div > div:nth-of-type(1) > div > div > input:nth-of-type(2):checked
+  /* coin checked active */
+  body > div > div:nth-of-type(1) > div > input:nth-of-type(1):checked:active
 ) {
+  /* claw */
   body > div > div:nth-of-type(2) > div > div:nth-of-type(1) /* claw */ {
-    animation-play-state:
-      paused,
-      running,
-      paused;
+    animation: none;
+    translate: 0 0 calc(var(--size) / -2);
   }
 }
 
@@ -254,8 +285,9 @@ html:has(
 
 @keyframes claw-move-z {
   0% {
+    /* adjust for depth */
     /* TODO: use --size */
-    --z: calc(clamp(20vw, 300px, 70vw) / 3 / 2 * -1);
+    --z: calc(clamp(20vw, 300px, 70vw) / 3 / -2);
   }
   100% {
     --z:
