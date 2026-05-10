@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'BPdots Diamond';
+  src: url('./fonts/BPdotsDiamond.woff') format('woff');
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -143,18 +149,17 @@ body {
             text-align: center;
             line-height: 2rem;
             text-shadow: 0 0 4px white;
+            font-family: 'BPdots Diamond';
           }
 
           > div:nth-of-type(1) /* claw */ {
-            --size: calc(var(--body-width) / 5);
+            --size: calc(var(--body-width) / var(--display-cols));
             --z: calc(var(--size) / -2); /* adjust for depth */
             position: absolute;
             top:  0;
             left: 0;
             width:  var(--size);
             height: var(--size);
-            background-image: url('/assets/claw.png');
-            background-size: 100%;
             transform:
               translate3d(var(--x), var(--y), var(--z));
             transform-style: preserve-3d;
@@ -178,6 +183,7 @@ body {
               paused,
               paused;
             
+            &::before,
             &::after {
               content: '';
               position: absolute;
@@ -187,8 +193,11 @@ body {
               height: 100%;
               background-image: url('/assets/claw.png');
               background-size: 100%;
-              transform: rotateY(90deg);
+              transform: rotateY(-25deg);
               transform-style: preserve-3d;
+            }
+            &::after {
+              transform: rotateY(75deg);
             }
           }
           
@@ -266,6 +275,9 @@ body {
     }
   }
 }
+
+
+/* interactions */
 
 /* move x */
 html:has(
