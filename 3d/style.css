@@ -216,9 +216,13 @@ body {
                 );
               
               > div {
+                --size: calc(var(--body-width) / 5);
                 display: flex;
-                width:  100%;
-                height: 100%;
+                width:  var(--size);
+                height: var(--size);
+                transform:
+                  translateZ(calc(var(--size) / 2))
+                  rotateX(-90deg);
                 transform-style: preserve-3d;
                 animation: col-select var(--dur-claw-move) linear;
                 animation-delay:
@@ -226,19 +230,7 @@ body {
                     (var(--i) - 1) *
                     var(--dur-claw-move) / (var(--items-x) - 1)
                   );
-                box-shadow: 0 0 0 1px black inset;
-              
-                &::after {
-                  --size: calc(var(--body-width) / 5);
-                  content: '';
-                  width:  var(--size);
-                  height: var(--size);
-                  transform:
-                    translateZ(calc(var(--size) / 2))
-                    rotateX(90deg);
-                  transform-style: preserve-3d;
-                  box-shadow: 0 0 0 1px white inset;
-                }
+                background-image: url('/assets/sheet-test.png');
               }
             }
           }
