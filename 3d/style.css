@@ -76,12 +76,7 @@ html, body {
   --dur-claw-return:    3s;
   --dur-item-drop:      1s;
   
-
-  /* --dur-claw-move:      2s;
-  --dur-claw-collect-a: 1s;
-  --dur-claw-collect-b: 1s;
-  --dur-claw-return:    2s;
-  --dur-item-drop:      0.5s; */
+  --current-sheet: url('/assets/sheet-test.png');
 }
 
 html, body {
@@ -219,7 +214,7 @@ body {
             transform:
               translate3d(var(--x), var(--y), var(--z));
             transform-style: preserve-3d;
-            background-image: url('/assets/sheet-test.png');
+            background-image: var(--current-sheet);
             background-size:
               calc(var(--sheet-cols) * 100%)
               calc(var(--sheet-rows) * 100%);
@@ -227,7 +222,7 @@ body {
               calc((var(--col) - 1) * -100%)
               calc((var(--row) - 1) * -100%);
             image-rendering: pixelated;
-            opacity: 0.5;
+            opacity: 0;
 
             animation:
               claw-move-x var(--dur-claw-move) linear forwards,
@@ -294,7 +289,7 @@ body {
                   rotateX(-90deg);
                 transform-style: preserve-3d;
 
-                background-image: url('/assets/sheet-test.png');
+                background-image: var(--current-sheet);
                 background-size:
                   calc(var(--sheet-cols) * 100%)
                   calc(var(--sheet-rows) * 100%);
@@ -333,12 +328,12 @@ body {
 /* interactions */
 
 /* move x */
-html:has(
+body > div:has(
   /* coin checked */
-  body > div > div:nth-of-type(1) > div > input:nth-of-type(1):checked
+  > div:nth-of-type(1) > div > input:nth-of-type(1):checked
 ) {
   /* claw */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
+  > div:nth-of-type(2) > div > div:nth-of-type(1) {
     animation-play-state:
       running,
       paused,
@@ -347,7 +342,7 @@ html:has(
       paused;
   }
   /* item */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
+  > div:nth-of-type(2) > div > div:nth-of-type(2) {
     animation-play-state:
       running,
       running,
@@ -358,18 +353,18 @@ html:has(
       paused;
   }
   /* display columns */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div {
     animation-play-state: running;
   }
 }
 
 /* move z */
-html:has(
+body > div:has(
   /* x button checked */
-  body > div > div:nth-of-type(1) > div > div > input:nth-of-type(1):checked
+  > div:nth-of-type(1) > div > div > input:nth-of-type(1):checked
 ) {
   /* claw */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
+  > div:nth-of-type(2) > div > div:nth-of-type(1) {
     animation-play-state:
       paused,
       running,
@@ -378,7 +373,7 @@ html:has(
       paused;
   }
   /* item */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
+  > div:nth-of-type(2) > div > div:nth-of-type(2) {
     animation-play-state:
       paused,
       paused,
@@ -389,22 +384,22 @@ html:has(
       paused;
   }
   /* display columns */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div {
     animation-play-state: paused;
   }
   /* display items */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
     animation-play-state: running;
   }
 }
 
 /* drop */
-html:has(
+body > div:has(
   /* z button checked */
-  body > div > div:nth-of-type(1) > div > div > input:nth-of-type(2):checked
+  > div:nth-of-type(1) > div > div > input:nth-of-type(2):checked
 ) {
   /* claw */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
+  > div:nth-of-type(2) > div > div:nth-of-type(1) {
     animation-play-state:
       paused,
       paused,
@@ -413,7 +408,7 @@ html:has(
       running;
   }
   /* item */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
+  > div:nth-of-type(2) > div > div:nth-of-type(2) {
     opacity: 1;
     animation-play-state:
       paused,
@@ -425,25 +420,25 @@ html:has(
       running;
   }
   /* display items */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
     opacity: calc(2 + var(--col-add-opacity) + var(--row-add-opacity));
     animation-play-state: paused;
   }
 }
 
 /* reset claw position */
-html:has(
+body > div:has(
   /* coin checked active */
-  body > div > div:nth-of-type(1) > div > input:nth-of-type(1):checked:active
+  > div:nth-of-type(1) > div > input:nth-of-type(1):checked:active
 ) {
   /* claw */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(1), /* claw */
+  > div:nth-of-type(2) > div > div:nth-of-type(1),
   /* item */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(2),
+  > div:nth-of-type(2) > div > div:nth-of-type(2),
   /* display columns */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div,
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div,
   /* display items */
-  body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
     animation: none;
   }
 }
