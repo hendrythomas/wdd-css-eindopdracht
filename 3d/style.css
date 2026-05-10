@@ -205,6 +205,7 @@ body {
 
             > div /* columns */ {
               --col: var(--i);
+              --col-add-opacity: 0;
               display: flex;
               flex-direction: column-reverse;
               width:  100%;
@@ -221,6 +222,7 @@ body {
               
               > div /* item */ {
                 --size: calc(var(--body-width) / var(--display-cols));
+                --row-add-opacity: 0;
                 display: flex;
                 width:  var(--size);
                 height: var(--size);
@@ -238,13 +240,14 @@ body {
                   calc((var(--i) - 1) * -100%);
                 image-rendering: pixelated;
 
-                animation: col-5-select var(--dur-claw-move) step-end;
+                animation: row-5-select var(--dur-claw-move) step-end;
                 animation-delay:
                   calc(
                     (var(--i) - 1) *
                     var(--dur-claw-move) / (var(--display-cols) - 1)
                   );
                 animation-play-state: paused;
+                opacity: calc(2 + var(--col-add-opacity) + var(--row-add-opacity));
               }
             }
           }
@@ -397,7 +400,12 @@ html:has(
 }
 
 @keyframes col-5-select {
-    0% { background-color: #ffffff80; }
+    0% { --col-add-opacity: -1; }
    25%,
-  100% { background-color: transparent; }
+  100% { --col-add-opacity: 0; }
+}
+@keyframes row-5-select {
+    0% { --row-add-opacity: -1; }
+   25%,
+  100% { --row-add-opacity: 0; }
 }
