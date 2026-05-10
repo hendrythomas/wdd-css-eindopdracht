@@ -63,8 +63,8 @@ html, body {
   --sheet-rows: 1;
 
   --dur-claw-move:      4s;
-  --dur-claw-collect-a: 3s;
-  --dur-claw-collect-b: 3s;
+  --dur-claw-collect-a: 1.5s;
+  --dur-claw-collect-b: 2s;
   --dur-claw-return:    3s;
   --dur-item-drop:      1s;
   
@@ -159,12 +159,18 @@ body {
             animation:
               claw-move-x var(--dur-claw-move) linear forwards,
               claw-move-z var(--dur-claw-move) linear forwards,
-              claw-move-y var(--dur-item-drop) linear forwards;
+              claw-collect var(--dur-claw-collect-a) linear forwards,
+              claw-collect var(--dur-claw-collect-b) linear forwards reverse,
+              claw-return var(--dur-claw-return) ease-in forwards;
             animation-delay:
-              1s,
-              1s,
-              0s;
+              0.5s,
+              0.5s,
+              0.5s,
+              calc(1s + var(--dur-claw-collect-a)),
+              calc(1s + var(--dur-claw-collect-a) + var(--dur-claw-collect-b));
             animation-play-state:
+              paused,
+              paused,
               paused,
               paused,
               paused;
@@ -209,6 +215,8 @@ html:has(
     animation-play-state:
       running,
       paused,
+      paused,
+      paused,
       paused;
   }
 }
@@ -223,6 +231,8 @@ html:has(
     animation-play-state:
       paused,
       running,
+      paused,
+      paused,
       paused;
   }
 }
@@ -237,6 +247,8 @@ html:has(
     animation-play-state:
       paused,
       paused,
+      running,
+      running,
       running;
   }
 }
@@ -249,7 +261,6 @@ html:has(
   /* claw */
   body > div > div:nth-of-type(2) > div > div:nth-of-type(1) /* claw */ {
     animation: none;
-    translate: 0 0 calc(var(--size) / -2);
   }
 }
 
@@ -270,19 +281,6 @@ html:has(
   }
 }
 
-@keyframes claw-move-y {
-  0% {
-    --y: 0;
-  }
-  100% {
-    --y:
-      calc(
-        clamp(20vw, 300px, 70vw) -
-        calc(clamp(20vw, 300px, 70vw) / 3)
-      );
-  }
-}
-
 @keyframes claw-move-z {
   0% {
     /* adjust for depth */
@@ -296,5 +294,25 @@ html:has(
         (clamp(20vw, 300px, 70vw) / 3 / 2)) *
         -1
       );
+  }
+}
+
+@keyframes claw-collect {
+  0% {
+    --y: 0;
+  }
+  100% {
+    --y:
+      calc(
+        clamp(20vw, 300px, 70vw) -
+        calc(clamp(20vw, 300px, 70vw) / 3)
+      );
+  }
+}
+
+@keyframes claw-return {
+  100% {
+    --x: 0;
+    --z: calc(clamp(20vw, 300px, 70vw) / 3 / -2);
   }
 }
