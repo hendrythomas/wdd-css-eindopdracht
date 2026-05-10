@@ -203,6 +203,8 @@ body {
 
           > div:nth-of-type(2) /* item */ {
             --size: calc(var(--body-width) / var(--item-cols));
+            --col: 1;
+            --row: 1;
             --z: calc(var(--size) / -2); /* adjust for depth */
             --y:
               calc(
@@ -221,21 +223,31 @@ body {
             background-size:
               calc(var(--sheet-cols) * 100%)
               calc(var(--sheet-rows) * 100%);
+            background-position:
+              calc((var(--col) - 1) * -100%)
+              calc((var(--row) - 1) * -100%);
             image-rendering: pixelated;
+            opacity: 0.5;
 
             animation:
               claw-move-x var(--dur-claw-move) linear forwards,
+              item-cycle-x-5 var(--dur-claw-move) linear forwards,
               claw-move-z var(--dur-claw-move) linear forwards,
+              item-cycle-z-5 var(--dur-claw-move) linear forwards,
               claw-collect var(--dur-claw-collect-b) linear forwards reverse,
               claw-return var(--dur-claw-return) ease-in forwards,
               claw-collect var(--dur-item-drop) ease-in forwards;
             animation-delay:
               0.5s,
               0.5s,
+              0.5s,
+              0.5s,
               calc(1s + var(--dur-claw-collect-a)),
               calc(1s + var(--dur-claw-collect-a) + var(--dur-claw-collect-b)),
               calc(1s + var(--dur-claw-collect-a) + var(--dur-claw-collect-b) + var(--dur-claw-return));
             animation-play-state:
+              paused,
+              paused,
               paused,
               paused,
               paused,
@@ -298,7 +310,6 @@ body {
                     var(--dur-claw-move) / (var(--item-cols) - 1)
                   );
                 animation-play-state: paused;
-                opacity: calc(2 + var(--col-add-opacity) + var(--row-add-opacity));
               }
             }
           }
@@ -339,6 +350,8 @@ html:has(
   body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
     animation-play-state:
       running,
+      running,
+      paused,
       paused,
       paused,
       paused,
@@ -368,6 +381,8 @@ html:has(
   body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
     animation-play-state:
       paused,
+      paused,
+      running,
       running,
       paused,
       paused,
@@ -399,7 +414,10 @@ html:has(
   }
   /* item */
   body > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
+    opacity: 1;
     animation-play-state:
+      paused,
+      paused,
       paused,
       paused,
       running,
@@ -408,6 +426,7 @@ html:has(
   }
   /* display items */
   body > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
+    opacity: calc(2 + var(--col-add-opacity) + var(--row-add-opacity));
     animation-play-state: paused;
   }
 }
@@ -480,6 +499,22 @@ html:has(
     --x: 0;
     --z: calc(clamp(20vw, 300px, 70vw) / 5 / -2);
   }
+}
+
+@keyframes item-cycle-x-5 {
+    0% { --col: 1; }
+   25% { --col: 2; }
+   50% { --col: 3; }
+   75% { --col: 4; }
+  100% { --col: 5; }
+}
+
+@keyframes item-cycle-z-5 {
+    0% { --row: 1; }
+   25% { --row: 2; }
+   50% { --row: 3; }
+   75% { --row: 4; }
+  100% { --row: 5; }
 }
 
 @keyframes col-5-select {
