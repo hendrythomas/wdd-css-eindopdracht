@@ -406,6 +406,55 @@ body {
 
             > input {
             }
+
+            > button {
+              --size: calc(var(--body-width) / var(--item-cols));
+              width:  calc(var(--size) * 2);
+              height: calc(var(--size) * 2);
+              box-shadow:
+                0 0 8px 2px #ffffff90 inset,
+                0 0 0 calc(var(--size) * 2) #00000070 inset;
+              
+              /* &:hover {
+                box-shadow:
+                  0 0 8px 2px #ffffff90 inset,
+                  0 0 0 6rem #00000070 inset,
+                  0 0 0 6rem #ffffff40 inset;
+              } */
+
+              &::after {
+                --col: 1;
+                --row: 1;
+                content: '';
+                position: absolute;
+                right:  50%;
+                bottom: 0;
+                translate: 50% 0;
+                width:  var(--size);
+                height: var(--size);
+                background-image: var(--item-bg);
+                background-size:
+                  calc(var(--sheet-cols) * 100%)
+                  calc(var(--sheet-rows) * 100%);
+                background-position:
+                  calc((var(--col) - 1) * -100%)
+                  calc((var(--row) - 1) * -100%);
+                opacity: 0;
+  
+                animation:
+                  item-cycle-x-5 var(--dur-claw-move) linear forwards,
+                  item-cycle-z-5 var(--dur-claw-move) linear forwards,
+                  appear 0.2s ease-in forwards;
+                animation-delay:
+                  0.5s,
+                  0.5s,
+                  calc(1.1s + var(--dur-claw-collect-a) + var(--dur-claw-collect-b) + var(--dur-claw-return) + var(--dur-item-drop));
+                animation-play-state:
+                  paused,
+                  paused,
+                  paused;
+              }
+            }
           }
 
           > input[type='range'] {
@@ -519,6 +568,13 @@ body > div:has(
   > div:nth-of-type(2) > div > div:nth-of-type(3) > div {
     animation-play-state: running;
   }
+  /* mailbox */
+  > div:nth-of-type(1) > div > output > button::after {
+    animation-play-state:
+      running,
+      paused,
+      paused;
+  }
 }
 
 /* move z */
@@ -554,6 +610,13 @@ body > div:has(
   > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
     animation-play-state: running;
   }
+  /* mailbox */
+  > div:nth-of-type(1) > div > output > button::after {
+    animation-play-state:
+      paused,
+      running,
+      paused;
+  }
 }
 
 /* drop */
@@ -587,6 +650,13 @@ body > div:has(
     opacity: calc(2 + var(--col-add-opacity) + var(--row-add-opacity));
     animation-play-state: paused;
   }
+  /* mailbox */
+  > div:nth-of-type(1) > div > output > button::after {
+    animation-play-state:
+      paused,
+      paused,
+      running;
+  }
 }
 
 /* reset claw position */
@@ -601,7 +671,9 @@ body > div:has(
   /* display columns */
   > div:nth-of-type(2) > div > div:nth-of-type(3) > div,
   /* display items */
-  > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div {
+  > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div,
+  /* mailbox */
+  > div:nth-of-type(1) > div > output > button::after {
     animation: none;
   }
 }
@@ -697,5 +769,19 @@ body > div:has(
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes appear {
+  0% {
+    margin-bottom: 50%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    margin-bottom: 0;
+    opacity: 1;
   }
 }
