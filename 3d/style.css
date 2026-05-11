@@ -62,21 +62,16 @@ html, body {
   --rotate-x: calc(var(--angle) * 3.6deg - 90deg);
   --body-width: clamp(20vw, 300px, 70vw);
 
-  --claw-width:  50px;
-  --claw-height: 50px;
-
   --item-cols: 5;
   --item-rows: 5;
-  --sheet-cols: 5;
-  --sheet-rows: 2;
 
   --dur-claw-move:      4s;
   --dur-claw-collect-a: 1.5s;
   --dur-claw-collect-b: 2s;
   --dur-claw-return:    3s;
   --dur-item-drop:      1s;
-  
-  --current-sheet: url('/assets/sheet-test.png');
+
+  container-type: normal;
 }
 
 html, body {
@@ -86,6 +81,11 @@ html, body {
 }
 
 body {
+  --item-bg: url('/assets/test-items.png');
+  --claw-bg: url('/assets/claw.png');
+  --cabinet-bg: royalblue;
+  --sheet-cols: 5;
+  --sheet-rows: 4;
   position: relative;
   margin: auto;
   font-family: sans-serif;
@@ -111,7 +111,7 @@ body {
         rotateX(80deg)
         rotateZ(var(--rotate-x));
       transform-style: preserve-3d;
-      background-color: royalblue;
+      background-color: var(--cabinet-bg);
 
       > div /* faces */ {
         position: absolute;
@@ -135,7 +135,7 @@ body {
 
         > div {
           box-shadow:
-            0 2rem 0 0 royalblue inset,
+            0 2rem 0 0 var(--cabinet-bg) inset,
             0 0 8px 2px #ffffff90 inset;
           background-color: #ffffff10;
 
@@ -186,8 +186,9 @@ body {
               left: 0;
               width:  100%;
               height: 100%;
-              background-image: url('/assets/claw.png');
+              background-image: var(--claw-bg);
               background-size: 100%;
+              background-repeat: no-repeat;
               transform: rotateY(-25deg);
               transform-style: preserve-3d;
             }
@@ -214,7 +215,7 @@ body {
             transform:
               translate3d(var(--x), var(--y), var(--z));
             transform-style: preserve-3d;
-            background-image: var(--current-sheet);
+            background-image: var(--item-bg);
             background-size:
               calc(var(--sheet-cols) * 100%)
               calc(var(--sheet-rows) * 100%);
@@ -289,7 +290,7 @@ body {
                   rotateX(-90deg);
                 transform-style: preserve-3d;
 
-                background-image: var(--current-sheet);
+                background-image: var(--item-bg);
                 background-size:
                   calc(var(--sheet-cols) * 100%)
                   calc(var(--sheet-rows) * 100%);
@@ -313,13 +314,99 @@ body {
 
       &:nth-of-type(1) /* stand */ {
         > div {
-          padding: 1rem;
-          background-color: royalblue;
+          background-color: var(--cabinet-bg);
           box-shadow:
              4px 0 0 0 #ffffff20 inset,
             -4px 0 0 0 #ffffff20 inset;
+
+          /* play button */
+          > input:nth-of-type(1) {
+            position: absolute;
+            right: 0;
+            top:   0;
+            margin: 1rem;
+            /*TODO: checked/ok outline */
+          }
+
+          /* controls */
+          > div:nth-of-type(1) {
+            position: absolute;
+            right: 50%;
+            top:   0;
+            translate: 50% 0;
+
+            > input {}
+          }
+
+          /* mailbox */
+          > output {
+            position: absolute;
+            right:  50%;
+            bottom: 50%;
+            translate: 50% 50%;
+
+            > input {}
+          }
         }
       }
+    }
+  }
+}
+@container style(--theme = 1) {
+  body {
+    --cabinet-bg: sienna;
+    --item-bg: url('/assets/alien-items.png');
+    --claw-bg: url('/assets/alien-claw.png');
+    --sheet-cols: 3;
+    --sheet-rows: 2;
+
+    /* claw */
+    > div > div:nth-of-type(2) > div > div:nth-of-type(1) {
+      animation-duration:
+        var(--dur-claw-move),
+        var(--dur-claw-move),
+        0s,
+        0s,
+        var(--dur-claw-return);
+      animation-fill-mode:
+        forwards,
+        forwards,
+        backwards,
+        forwards,
+        forwards;
+      height: var(--body-width);
+      background-color: #00ff0020;
+      border-radius: 100% 100% 0 0;
+    }
+    /* item */
+    > div > div:nth-of-type(2) > div > div:nth-of-type(2) {
+      animation-timing-function:
+        linear,
+        linear,
+        linear,
+        linear,
+        ease-out,
+        ease-in,
+        ease-in;
+    }
+
+    /* box */
+    > div > div:nth-of-type(2) {
+      background-color: transparent;
+
+      > div {
+        background-color: transparent;
+        box-shadow: none;
+
+        > header {
+          transform: translateZ(calc(var(--body-width) * -1));
+        }
+      }
+    }
+
+    /* stand */
+    > div > div:nth-of-type(1) {
+      background-color: yellowgreen;
     }
   }
 }
@@ -428,7 +515,7 @@ body > div:has(
 
 /* reset claw position */
 body > div:has(
-  /* coin checked active */
+  /* play checked active */
   > div:nth-of-type(1) > div > input:nth-of-type(1):checked:active
 ) {
   /* claw */
