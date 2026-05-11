@@ -5,10 +5,6 @@ CSS features:
 *  Container queries
 *  Property at-rules
 
-can't do alternate
-can't do hover
-mdn 3d
-
 ## Day 0
 
 Today I came up with my idea to create a claw machine. I made a 2D prototype:
@@ -17,7 +13,7 @@ Today I came up with my idea to create a claw machine. I made a 2D prototype:
 
 ![Prototype 2](./docs/assets/prototype2.png)
 
-I explained the architecture in ... []
+I explained the architecture in [#design](#Design).
 
 Tomorrow I will translate the design to 3D.
 
@@ -51,15 +47,14 @@ I've added the items. Items can be selected and hidden. I described this functio
 
 I added styling for the control panel and added a theme. This can be selected using a theme slider.
 
-https://opengameart.org/content/lpc-style-farm-animals
-
-
 
 ## Design
 
 ### Movement & selecting items
 
 My idea for claw movement was for everything to have two animations, for x and z. These are then paused by checkboxes.
+
+It would have been more intuitive to use :active, but I didn't find a way to detect letting go of a button.
 
 The claw and item x movement animations look like this:
 
@@ -117,3 +112,16 @@ To solve this, I made it look like a coin slot. This communicates that it's requ
 Due to the glass frame, the effects of actions are immediately visible.
 
 Additionally, I've added styling to communicate what buttons are pressed. This combined with the placement of the buttons, it naturally becomes clear what buttons have yet to be pressed.
+
+
+# Sources
+
+*  MDN
+   *  https://developer.mozilla.org/en-US/docs/Web/HTML
+   *  https://developer.mozilla.org/en-US/docs/Web/CSS
+*  Fonts
+   *  Backpacker https://backpacker.gr/fonts/7
+*  Sprites
+   *  RPG Maker VX Ace
+   *  OpenGameArt https://opengameart.org/content/lpc-style-farm-animals
+   *  https://www.hiddenone-sprites.com/
