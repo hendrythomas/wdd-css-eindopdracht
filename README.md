@@ -5,7 +5,10 @@ CSS features:
 *  Container queries
 *  Property at-rules
 
-## Day 0
+
+## Log
+
+### Day 0
 
 Today I came up with my idea to create a claw machine. I made a 2D prototype:
 
@@ -17,13 +20,13 @@ I explained the architecture in [#design](#Design).
 
 Tomorrow I will translate the design to 3D.
 
-## Day 1
+### Day 1
 
 Today I made a 3D box.
 
 `translateZ` doesn't work on the claw. Tomorrow I will try to fix this issue.
 
-## Day 2
+### Day 2
 
 I experimented with 3D in codepen until I found the issue.
 
@@ -31,21 +34,27 @@ I found out that the problem was caused by the use of `filter` for the cabinet s
 
 Next time I can start working on implementing the claw movement.
 
-## Week 1
+### Week 1
 
 This week I designed my idea and made a 3D box. I learned to check seemingly unrelated CSS features for problems, like `filter`.
 
 Next week I will try to finish the claw machine and add themes.
 
-## Day 3
+### Day 3
 
 I've implemented the movement from my prototype in 3D.
 
 I've added the items. Items can be selected and hidden. I described this functionality in [#design](#Design).
 
-## Day 4
+### Day 4
 
-I added styling for the control panel and added a theme. This can be selected using a theme slider.
+I've added styling for the control panel and added a theme. This can be selected using a theme slider.
+
+I've added a font that matches the theme (BPdots).
+
+### Week 5
+
+This week I finished the basic functionality and added a theme and typography. If I had more time, I would have added a popover, an inventory and more themes.
 
 
 ## Design
