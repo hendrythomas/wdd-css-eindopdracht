@@ -423,6 +423,7 @@ body {
               } */
 
               &::after {
+                --size: calc(var(--body-width) / var(--item-cols));
                 --col: 1;
                 --row: 1;
                 content: '';
